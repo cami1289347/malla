@@ -118,11 +118,7 @@
   <div class="grid" id="fila3"></div>
 
   <script>
-    const completados = new Set(JSON.parse(localStorage.getItem('cursosCompletados') || '[]'));
-
-  function guardarCompletados() {
-    localStorage.setItem('cursosCompletados', JSON.stringify(Array.from(completados)));
-  }
+    
     const cursos = {
       1: [
         { cod: 'CBO101', nombre: 'LENGUAJE', cred: 4 },
@@ -218,7 +214,11 @@
       ]
     };
 
-    const completados = new Set();
+  const completados = new Set(JSON.parse(localStorage.getItem('cursosCompletados') || '[]'));
+
+  function guardarCompletados() {
+    localStorage.setItem('cursosCompletados', JSON.stringify(Array.from(completados)));
+  }
 
     function renderCiclos() {
       let creditosTotales = 254;
