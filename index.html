@@ -32,13 +32,12 @@
       margin-top: 0.5rem;
     }
 
-    .grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
 
     .ciclo {
       background: white;
@@ -119,6 +118,11 @@
   <div class="grid" id="fila3"></div>
 
   <script>
+    const completados = new Set(JSON.parse(localStorage.getItem('cursosCompletados') || '[]'));
+
+  function guardarCompletados() {
+    localStorage.setItem('cursosCompletados', JSON.stringify(Array.from(completados)));
+  }
     const cursos = {
       1: [
         { cod: 'CBO101', nombre: 'LENGUAJE', cred: 4 },
@@ -248,26 +252,35 @@
       document.getElementById('fila3').appendChild(div0);
     }
 
-    function actualizarEstado() {
-      document.querySelectorAll('.curso').forEach(item => {
-        const input = item.querySelector('input');
-        const cod = input.id;
-        const curso = Object.values(cursos).flat().find(c => c.cod === cod);
+ function actualizarEstado() {
+    document.querySelectorAll('.curso').forEach(item => {
+      const input = item.querySelector('input');
+      const cod = input.id;
+      const curso = Object.values(cursos).flat().find(c => c.cod === cod);
 
-        if (curso?.pre && !curso.pre.every(p => completados.has(p))) {
-          input.disabled = true;
-          item.classList.add('bloqueado');
-        } else {
-          input.disabled = false;
-          item.classList.remove('bloqueado');
-        }
+      input.checked = completados.has(cod);
+      input.disabled = curso?.pre && !curso.pre.every(p => completados.has(p));
 
-        if (completados.has(cod)) {
-          item.classList.add('completado');
-        } else {
-          item.classList.remove('completado');
-        }
-      });
+      item.classList.toggle('bloqueado', input.disabled);
+      item.classList.toggle('completado', input.checked);
+    });
+
+    const totalCreditos = Array.from(completados)
+      .map(id => Object.values(cursos).flat().find(c => c.cod === id)?.cred || 0)
+      .reduce((a, b) => a + b, 0);
+
+    document.getElementById('creditosCompletados').textContent = totalCreditos;
+  }
+
+  document.addEventListener('change', e => {
+    if (e.target.matches('input[type="checkbox"]')) {
+      const id = e.target.id;
+      e.target.checked ? completados.add(id) : completados.delete(id);
+      guardarCompletados();
+      actualizarEstado();
+    }
+  });
+
 
       const totalCreditos = Array.from(completados)
         .map(id => Object.values(cursos).flat().find(c => c.cod === id)?.cred || 0)
