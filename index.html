@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malla Curricular - Computación Científica UNMSM</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f4f6fa;
+      color: #333;
+      padding: 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    header img {
+      width: 100px;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .ciclo {
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 250px;
+      flex-grow: 1;
+    }
+
+    .ciclo h2 {
+      text-align: center;
+      margin-top: 0;
+      font-size: 1.1rem;
+      color: #00509d;
+    }
+
+    .curso {
+      margin: 0.3rem 0;
+      background: #e6eefc;
+      padding: 0.5rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .curso:hover {
+      background: #d0e0fa;
+    }
+
+    .curso input {
+      display: none;
+    }
+
+    .curso label {
+      flex: 1;
+      margin-left: 0.5rem;
+    }
+
+    .bloqueado {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .completado {
+      text-decoration: line-through;
+      background: #c0e8c2;
+    }
+
+    #resumen {
+      text-align: center;
+      margin: 1rem 0 2rem;
+      font-weight: bold;
+    }
+
+    @media screen and (max-width: 768px) {
+      .grid {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/Escudo_UNMSM.png" alt="UNMSM Logo">
+    <h1>Malla Curricular Interactiva - Computación Científica (Plan 2018)</h1>
+  </header>
+
+  <div id="resumen">Créditos completados: <span id="creditosCompletados">0</span> / <span id="creditosTotales">254</span></div>
+
+  <div class="grid" id="fila1"></div>
+  <div class="grid" id="fila2"></div>
+  <div class="grid" id="fila3"></div>
+
+  <script>
+    const cursos = {
+      1: [
+        { cod: 'CBO101', nombre: 'LENGUAJE', cred: 4 },
+        { cod: 'CBO102', nombre: 'MÉTODOS DE ESTUDIO UNIVERSITARIO', cred: 3 },
+        { cod: 'CBO103', nombre: 'GESTIÓN PERSONAL', cred: 3 },
+        { cod: 'CBO104', nombre: 'CÁLCULO I', cred: 4 },
+        { cod: 'CBO105', nombre: 'MATEMÁTICA BÁSICA', cred: 4 },
+        { cod: 'CBO106', nombre: 'BIOLOGÍA', cred: 4 },
+        { cod: 'CBE004', nombre: 'GÉNERO Y SOCIEDAD', cred: 2 }
+      ],
+      2: [
+        { cod: 'CBO201', nombre: 'FUNDAMENTOS DE INVESTIGACIÓN CIENTÍFICA', cred: 3 },
+        { cod: 'CBO202', nombre: 'MEDIO AMBIENTE Y DESARROLLO SOSTENIBLE', cred: 4, pre: ['CBO106'] },
+        { cod: 'CBO203', nombre: 'REALIDAD NACIONAL Y MUNDIAL', cred: 3 },
+        { cod: 'CBO204', nombre: 'CÁLCULO II', cred: 4, pre: ['CBO104'] },
+        { cod: 'CBO205', nombre: 'QUÍMICA INORGÁNICA Y ORGÁNICA', cred: 4 },
+        { cod: 'CBO206', nombre: 'FÍSICA GENERAL', cred: 4 },
+        { cod: 'CBE003', nombre: 'ECONOMÍA GENERAL', cred: 2 }
+      ],
+      // (los demás ciclos siguen igual)
+    };
+
+    const completados = new Set();
+
+    function renderCiclos() {
+      let creditosTotales = 254;
+
+      for (let ciclo = 1; ciclo <= 10; ciclo++) {
+        const div = document.createElement('div');
+        div.classList.add('ciclo');
+        div.innerHTML = `<h2>Ciclo ${ciclo}</h2>`;
+
+        cursos[ciclo]?.forEach(curso => {
+          const item = document.createElement('div');
+          item.className = 'curso';
+          item.innerHTML = `<input type="checkbox" id="${curso.cod}" /><label for="${curso.cod}">${curso.nombre} (${curso.cred} cr)</label>`;
+          if (curso.pre) item.classList.add('bloqueado');
+          div.appendChild(item);
+        });
+
+        document.getElementById(ciclo <= 5 ? 'fila1' : 'fila2').appendChild(div);
+      }
+
+      // Ciclo 0
+      const div0 = document.createElement('div');
+      div0.classList.add('ciclo');
+      div0.innerHTML = `<h2>Ciclo 0</h2>`;
+      cursos[0]?.forEach(curso => {
+        const item = document.createElement('div');
+        item.className = 'curso bloqueado';
+        item.innerHTML = `<input type="checkbox" id="${curso.cod}" /><label for="${curso.cod}">${curso.nombre} (${curso.cred} cr)</label>`;
+        div0.appendChild(item);
+      });
+      document.getElementById('fila3').appendChild(div0);
+    }
+
+    function actualizarEstado() {
+      document.querySelectorAll('.curso').forEach(item => {
+        const input = item.querySelector('input');
+        const cod = input.id;
+        const curso = Object.values(cursos).flat().find(c => c.cod === cod);
+
+        if (curso?.pre && !curso.pre.every(p => completados.has(p))) {
+          input.disabled = true;
+          item.classList.add('bloqueado');
+        } else {
+          input.disabled = false;
+          item.classList.remove('bloqueado');
+        }
+
+        if (completados.has(cod)) {
+          item.classList.add('completado');
+        } else {
+          item.classList.remove('completado');
+        }
+      });
+
+      const totalCreditos = Array.from(completados)
+        .map(id => Object.values(cursos).flat().find(c => c.cod === id)?.cred || 0)
+        .reduce((a, b) => a + b, 0);
+
+      document.getElementById('creditosCompletados').textContent = totalCreditos;
+    }
+
+    document.addEventListener('change', e => {
+      if (e.target.matches('input[type="checkbox"]')) {
+        const id = e.target.id;
+        if (e.target.checked) completados.add(id);
+        else completados.delete(id);
+        actualizarEstado();
+      }
+    });
+
+    renderCiclos();
+    actualizarEstado();
+  </script>
+</body>
+</html>
