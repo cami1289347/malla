@@ -220,30 +220,35 @@
     localStorage.setItem('cursosCompletados', JSON.stringify(Array.from(completados)));
   }
 
-    function renderCiclos() {
-  const ordenCiclos = Object.keys(cursos).map(Number).sort((a, b) => {
-    if (a === 0) return 1; // mueve el ciclo 0 al final
-    if (b === 0) return -1;
-    return a - b;
-  });
+  function renderCiclos() {
+  const filas = {
+    fila1: [1, 2, 3, 4],
+    fila2: [5, 6, 7, 8],
+    fila3: [9, 10, 0]
+  };
 
-  for (let ciclo of ordenCiclos) {
+  for (const filaId in filas) {
+    const contenedor = document.getElementById(filaId);
+    const ciclos = filas[filaId];
 
-        const div = document.createElement('div');
-        div.classList.add('ciclo');
-        div.innerHTML = `<h2>Ciclo ${ciclo}</h2>`;
+    for (const ciclo of ciclos) {
+      const div = document.createElement('div');
+      div.classList.add('ciclo');
+      div.innerHTML = `<h2>Ciclo ${ciclo}</h2>`;
 
-        cursos[ciclo].forEach(curso => {
-          const item = document.createElement('div');
-          item.className = 'curso';
-          item.innerHTML = `<input type="checkbox" id="${curso.cod}" /><label for="${curso.cod}">${curso.nombre} (${curso.cred} cr)</label>`;
-          if (curso.pre) item.classList.add('bloqueado');
-          div.appendChild(item);
-        });
+      cursos[ciclo]?.forEach(curso => {
+        const item = document.createElement('div');
+        item.className = 'curso';
+        item.innerHTML = `<input type="checkbox" id="${curso.cod}" /><label for="${curso.cod}">${curso.nombre} (${curso.cred} cr)</label>`;
+        if (curso.pre) item.classList.add('bloqueado');
+        div.appendChild(item);
+      });
 
-        document.getElementById(ciclo <= 4 ? 'fila1' : 'fila2').appendChild(div);
-      }
+      contenedor.appendChild(div);
     }
+  }
+}
+
 
     function actualizarEstado() {
       document.querySelectorAll('.curso').forEach(item => {
