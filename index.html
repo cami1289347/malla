@@ -221,14 +221,12 @@
   }
 
     function renderCiclos() {
-      let creditosTotales = 254;
-
-      for (let ciclo = 1; ciclo <= 10; ciclo++) {
+      for (let ciclo = 1; ciclo <= 2; ciclo++) {
         const div = document.createElement('div');
         div.classList.add('ciclo');
         div.innerHTML = `<h2>Ciclo ${ciclo}</h2>`;
 
-        cursos[ciclo]?.forEach(curso => {
+        cursos[ciclo].forEach(curso => {
           const item = document.createElement('div');
           item.className = 'curso';
           item.innerHTML = `<input type="checkbox" id="${curso.cod}" /><label for="${curso.cod}">${curso.nombre} (${curso.cred} cr)</label>`;
@@ -236,51 +234,22 @@
           div.appendChild(item);
         });
 
-        document.getElementById(ciclo <= 5 ? 'fila1' : 'fila2').appendChild(div);
+        document.getElementById(ciclo <= 4 ? 'fila1' : 'fila2').appendChild(div);
       }
+    }
 
-      // Ciclo 0
-      const div0 = document.createElement('div');
-      div0.classList.add('ciclo');
-      div0.innerHTML = `<h2>Ciclo 0</h2>`;
-      cursos[0]?.forEach(curso => {
-        const item = document.createElement('div');
-        item.className = 'curso bloqueado';
-        item.innerHTML = `<input type="checkbox" id="${curso.cod}" /><label for="${curso.cod}">${curso.nombre} (${curso.cred} cr)</label>`;
-        div0.appendChild(item);
+    function actualizarEstado() {
+      document.querySelectorAll('.curso').forEach(item => {
+        const input = item.querySelector('input');
+        const cod = input.id;
+        const curso = Object.values(cursos).flat().find(c => c.cod === cod);
+
+        input.checked = completados.has(cod);
+        input.disabled = curso?.pre && !curso.pre.every(p => completados.has(p));
+
+        item.classList.toggle('bloqueado', input.disabled);
+        item.classList.toggle('completado', input.checked);
       });
-      document.getElementById('fila3').appendChild(div0);
-    }
-
- function actualizarEstado() {
-    document.querySelectorAll('.curso').forEach(item => {
-      const input = item.querySelector('input');
-      const cod = input.id;
-      const curso = Object.values(cursos).flat().find(c => c.cod === cod);
-
-      input.checked = completados.has(cod);
-      input.disabled = curso?.pre && !curso.pre.every(p => completados.has(p));
-
-      item.classList.toggle('bloqueado', input.disabled);
-      item.classList.toggle('completado', input.checked);
-    });
-
-    const totalCreditos = Array.from(completados)
-      .map(id => Object.values(cursos).flat().find(c => c.cod === id)?.cred || 0)
-      .reduce((a, b) => a + b, 0);
-
-    document.getElementById('creditosCompletados').textContent = totalCreditos;
-  }
-
-  document.addEventListener('change', e => {
-    if (e.target.matches('input[type="checkbox"]')) {
-      const id = e.target.id;
-      e.target.checked ? completados.add(id) : completados.delete(id);
-      guardarCompletados();
-      actualizarEstado();
-    }
-  });
-
 
       const totalCreditos = Array.from(completados)
         .map(id => Object.values(cursos).flat().find(c => c.cod === id)?.cred || 0)
@@ -292,8 +261,8 @@
     document.addEventListener('change', e => {
       if (e.target.matches('input[type="checkbox"]')) {
         const id = e.target.id;
-        if (e.target.checked) completados.add(id);
-        else completados.delete(id);
+        e.target.checked ? completados.add(id) : completados.delete(id);
+        guardarCompletados();
         actualizarEstado();
       }
     });
