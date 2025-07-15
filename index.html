@@ -138,7 +138,80 @@
         { cod: 'CBO206', nombre: 'FÍSICA GENERAL', cred: 4 },
         { cod: 'CBE003', nombre: 'ECONOMÍA GENERAL', cred: 2 }
       ],
-      // (los demás ciclos siguen igual)
+      3: [
+        { cod: '183031', nombre: 'CÁLCULO III', cred: 6, pre: ['CBO204'] },
+        { cod: '183032', nombre: 'ELEMENTOS DE ÁLGEBRA Y GEOMETRÍA', cred: 6, pre: ['CBO104', 'CBO105'] },
+        { cod: '183033', nombre: 'ALGORÍTMICA Y FUNDAMENTOS DE PROGRAMACIÓN', cred: 6, pre: ['CBO105'] },
+        { cod: '183034', nombre: 'MATEMÁTICA DISCRETA Y COMPUTACIONAL', cred: 4, pre: ['CBO104', 'CBO105'] },
+        { cod: '183035', nombre: 'INGLÉS I', cred: 3 }
+      ],
+      4: [
+        { cod: '183041', nombre: 'CÁLCULO IV', cred: 6, pre: ['183031'] },
+        { cod: '183042', nombre: 'ÁLGEBRA', cred: 6, pre: ['183032'] },
+        { cod: '183043', nombre: 'MODELOS MATEMÁTICOS DE LA FÍSICA', cred: 5, pre: ['CBO204', 'CBO105', 'CBO206'] },
+        { cod: '183044', nombre: 'ESTRUCTURA DE DATOS', cred: 6, pre: ['183033'] },
+        { cod: '183045', nombre: 'INGLÉS II', cred: 3, pre: ['183035'] }
+      ],
+      5: [
+        { cod: '183051', nombre: 'ANÁLISIS REAL', cred: 6, pre: ['183031'] },
+        { cod: '183052', nombre: 'ECUACIONES DIFERENCIALES ORDINARIAS', cred: 6, pre: ['183032', 'CBO204'] },
+        { cod: '183053', nombre: 'BASE DE DATOS E INGENIERÍA DE SOFTWARE', cred: 6, pre: ['183044'] },
+        { cod: '183054', nombre: 'MÉTODOS NUMÉRICOS I', cred: 5, pre: ['183042', 'CBO204'] },
+        { cod: '183055', nombre: 'INGLÉS III', cred: 3, pre: ['183045'] }
+      ],
+      6: [
+        { cod: '183061', nombre: 'ANÁLISIS FUNCIONAL I', cred: 5, pre: ['183042', '183051'] },
+        { cod: '183062', nombre: 'PROBABILIDAD E INFERENCIA ESTADÍSTICA', cred: 5, pre: ['183032', 'CBO204'] },
+        { cod: '183063', nombre: 'MÉTODOS NUMÉRICOS II', cred: 6, pre: ['183054', '183052'] },
+        { cod: '183064', nombre: 'SISTEMAS OPERATIVOS', cred: 5, pre: ['183053'] },
+        { cod: '183065', nombre: 'TÉCNICAS DE MODELAMIENTO', cred: 5, pre: ['183043'] }
+      ],
+      7: [
+        { cod: '183071', nombre: 'ANÁLISIS FUNCIONAL II', cred: 5, pre: ['183061', '183052'] },
+        { cod: '183072', nombre: 'COMPUTACIÓN GRÁFICA', cred: 6, pre: ['183042'] },
+        { cod: '183073', nombre: 'MODELOS MATEMÁTICOS DE LA CIENCIA I', cred: 5, pre: ['183052', '183065'] },
+        { cod: '183074', nombre: 'INTELIGENCIA ARTIFICIAL', cred: 5, pre: ['183064'] }
+      ],
+      8: [
+        { cod: '183081', nombre: 'ECUACIONES DIFERENCIALES PARCIALES I', cred: 6, pre: ['183052'] },
+        { cod: '183082', nombre: 'MODELOS MATEMÁTICOS DE LA CIENCIA II', cred: 5, pre: ['183073'] },
+        { cod: '183083', nombre: 'REDES, ARQUITECTURA Y COMUNICACIONES', cred: 6, pre: ['183064'] },
+        { cod: '183084', nombre: 'PROYECTO DE INVESTIGACIÓN', cred: 4 }
+      ],
+      9: [
+        { cod: '183091', nombre: 'OPTIMIZACIÓN', cred: 5, pre: ['183051', '183042'] },
+        { cod: '183092', nombre: 'MODELOS MATEMÁTICOS DE LA CIENCIA III', cred: 5, pre: ['183082'] },
+        { cod: '183093', nombre: 'MÉTODOS NUMÉRICOS III', cred: 6, pre: ['183063', '183081'] },
+        { cod: '183094', nombre: 'DESARROLLO DEL PROYECTO DE INVESTIGACIÓN', cred: 5 }
+      ],
+      10: [
+        { cod: '183101', nombre: 'MODELOS MATEMÁTICOS DE LA CIENCIA IV', cred: 6, pre: ['183092'] },
+        { cod: '183102', nombre: 'FORMULACIÓN, EVALUACIÓN Y GESTIÓN DE PROYECTOS', cred: 4, pre: ['183083'] },
+        { cod: '183103', nombre: 'PRÁCTICA PRE PROFESIONAL', cred: 4 },
+        { cod: '183104', nombre: 'PRESENTACIÓN Y SUSTENTACIÓN DEL PROYECTO DE INVESTIGACIÓN', cred: 6, pre: ['183094'] }
+      ],
+      0: [
+        { cod: '183111', nombre: 'ECUACIONES DIFERENCIALES PARCIALES II', cred: 5, pre: ['183081', '183071'] },
+        { cod: '183112', nombre: 'ANÁLISIS COMPLEJO Y APLICADO', cred: 5, pre: ['183051'] },
+        { cod: '183113', nombre: 'ECUACIONES INTEGRALES', cred: 5, pre: ['183081'] },
+        { cod: '183114', nombre: 'ANÁLISIS COMPLEJO EN CN', cred: 5, pre: ['183112'] },
+        { cod: '183115', nombre: 'PROBLEMAS INVERSOS', cred: 5, pre: ['183052'] },
+        { cod: '183116', nombre: 'SISTEMAS DINÁMICOS', cred: 5, pre: ['183073'] },
+        { cod: '183121', nombre: 'METEOROLOGÍA', cred: 5, pre: ['183043'] },
+        { cod: '183122', nombre: 'TERMOELASTICIDAD', cred: 5, pre: ['183043'] },
+        { cod: '183123', nombre: 'MECÁNICA CUÁNTICA', cred: 5, pre: ['183043'] },
+        { cod: '183124', nombre: 'GEOFÍSICA', cred: 5, pre: ['183043'] },
+        { cod: '183125', nombre: 'MODELAMIENTO PARA LA ECOLOGÍA', cred: 5, pre: ['183043'] },
+        { cod: '183126', nombre: 'MÉTODOS DE LOS ELEMENTOS FINITOS', cred: 5, pre: ['183081', '183093'] },
+        { cod: '183127', nombre: 'OPTIMIZACIÓN DINÁMICA Y CONVEXA', cred: 5, pre: ['183091'] },
+        { cod: '183128', nombre: 'ELECTRÓNICA DIGITAL', cred: 5, pre: ['183034'] },
+        { cod: '183131', nombre: 'SISTEMAS INTELIGENTES', cred: 5, pre: ['183074'] },
+        { cod: '183132', nombre: 'SISTEMAS DE INFORMACIÓN GERENCIAL', cred: 5, pre: ['183074'] },
+        { cod: '183133', nombre: 'FUNDAMENTOS AVANZADOS DE COMPUTACIÓN', cred: 5, pre: ['183093'] },
+        { cod: '183134', nombre: 'VIDEO JUEGOS Y APLICACIONES MÓVILES', cred: 5, pre: ['183072', '183063'] },
+        { cod: '183135', nombre: 'PROGRAMACIÓN SEGURA EN SISTEMAS COMPUTACIONALES', cred: 5, pre: ['183074', '183083'] },
+        { cod: '183136', nombre: 'INTRODUCCIÓN A MACHINE LEARNING', cred: 5, pre: ['183074', '183083'] }
+      ]
     };
 
     const completados = new Set();
